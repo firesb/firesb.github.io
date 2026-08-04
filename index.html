@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="msvalidate.01" content="F33B01A1CF834E06F749CAFB89E944EE" />
+    <meta name="description" content="Official website for Fire Spelling Bee, a company designed to teach anyone professional English.">
+    <script type="application/ld+json">
+      {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Fire Spelling Bee",
+    "url": "https://realmpo.github.io/fsb",
+    "logo": "https://github.io/logo.png",
+    "sameAs": [
+        "https://realmpo.github.io/fsb",
+        "https://github.com/realmpo"
+    ]
+    }
+    </script>
+    <title>
+      Fire Spelling Bee - Homepage
+    </title>
+    <link rel="icon" type="image/png" href="/fsb/EMOJIS/C_bee.png">
+    <style>
+      body {
+            margin: 0;
+            padding: 20px;
+            font-family: "Brush Script MT", "Brush Script Std", "Comic Sans MS", cursive;
+            background-image: url('/fsb/fsb_background.png');
+            background-repeat: repeat; 
+            background-size: auto; 
+            background-position: 0px 0px; 
+            background-color: #eaff00;
+            background-attachment: fixed;
+        }
+
+        .spacer {
+            height: 30000px; 
+        }
+
+        /* 1. FLEX CONTEXT: Main structural column wrapper */
+        .beehive-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        /* 2. FLEX ROW SYSTEM: Safely groups 5 buttons per line */
+        .hive-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            height: 156px; /* Total height of the staggered row height block */
+            margin-bottom: -52px; /* Pulls the NEXT row upward to interlock perfectly */
+        }
+
+        /* 3. INDIVIDUAL CELL: Pulls elements side-by-side with a negative left margin */
+        .hive-item {
+            position: relative;
+            width: 120px;   
+            height: 104px;  
+        }
+
+        /* Pulls buttons together horizontally to link the side teeth */
+        .hive-item + .hive-item {
+            margin-left: -30px; 
+        }
+
+        /* 4. THE ZIG-ZAG MATH: Modulo shifts the 2nd and 4th element down inside EVERY row */
+        .hive-row .hive-item:nth-child(2),
+        .hive-row .hive-item:nth-child(4) {
+            transform: translateY(52px); /* Exactly half the button height */
+        }
+
+        .hex-wrapper {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .hex-clickable {
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+            transform-origin: center;
+        }
+
+        .hex-clickable:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+            position: relative;
+            z-index: 10; /* Ensures the hovered button pops above neighbors cleanly */
+        }
+        button {
+          background-color: #e34424;
+          border-radius: 50000px;
+          font-family: "Brush Script MT", "Brush Script Std", "Comic Sans MS", cursive;
+        }
+        .loginsignupbuttons {
+          font-size: 40px;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <header style="text-align: center;" role="banner">
+        <img src="/fsb/logo.png" width="20%" alt="Fire Spelling Bee Official Logo">
+      </header>
+      <h1 style="text-align: center;">
+        Fire Spelling Bee
+      </h1>
+      <main role="main">
+        <div class="beehive-grid">
+          <div class="hive-row">
+            <div class="hive-item">
+              <svg class="hex-wrapper" viewBox="0 0 100 86.6" xmlns="http://w3.org">
+                <defs>
+                  <pattern id="png-1" width="1" height="1" viewBox="0 0 100 86.6" preserveAspectRatio="xMidYMid slice">
+                    <image href="practice-button.png" width="100" height="86.6" />
+                  </pattern>
+                </defs>
+                <polygon class="hex-clickable data-btn" data-id="1" points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" fill="url(#png-1)" />
+              </svg>
+            </div>
+            <div class="hive-item">
+              <svg class="hex-wrapper" viewBox="0 0 100 86.6" xmlns="http://w3.org">
+                <defs>
+                  <pattern id="png-2" width="1" height="1" viewBox="0 0 100 86.6" preserveAspectRatio="xMidYMid slice">
+                    <image href="buy-subscription-button.png" width="100" height="86.6" />
+                  </pattern>
+                </defs>
+                <polygon class="hex-clickable data-btn" data-id="2" points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" fill="url(#png-2)" />
+              </svg>
+            </div>
+            <div class="hive-item">
+              <svg class="hex-wrapper" viewBox="0 0 100 86.6" xmlns="http://w3.org">
+                <defs>
+                  <pattern id="png-3" width="1" height="1" viewBox="0 0 100 86.6" preserveAspectRatio="xMidYMid slice">
+                    <image href="practice-button.png" width="100" height="86.6" />
+                  </pattern>
+                </defs>
+                <polygon class="hex-clickable data-btn" data-id="3" points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" fill="url(#png-3)" />
+              </svg>
+            </div>
+            <div class="hive-item">
+              <svg class="hex-wrapper" viewBox="0 0 100 86.6" xmlns="http://w3.org">
+                <defs>
+                  <pattern id="png-4" width="1" height="1" viewBox="0 0 100 86.6" preserveAspectRatio="xMidYMid slice">
+                    <image href="practice-button.png" width="100" height="86.6" />
+                  </pattern>
+                </defs>
+                <polygon class="hex-clickable data-btn" data-id="4" points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" fill="url(#png-4)" />
+              </svg>
+            </div>
+            <div class="hive-item">
+              <svg class="hex-wrapper" viewBox="0 0 100 86.6" xmlns="http://w3.org">
+                <defs>
+                  <pattern id="png-5" width="1" height="1" viewBox="0 0 100 86.6" preserveAspectRatio="xMidYMid slice">
+                    <image href="practice-button.png" width="100" height="86.6" />
+                  </pattern>
+                </defs>
+                <polygon class="hex-clickable data-btn" data-id="5" points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" fill="url(#png-5)" />
+              </svg>
+            </div>
+          </div>
+          <div class="hive-row">
+            <div class="hive-item">
+              <svg class="hex-wrapper" viewBox="0 0 100 86.6" xmlns="http://w3.org">
+                <defs>
+                  <pattern id="png-6" width="1" height="1" viewBox="0 0 100 86.6" preserveAspectRatio="xMidYMid slice">
+                    <image href="practice-button.png" width="100" height="86.6" />
+                  </pattern>
+                </defs>
+                <polygon class="hex-clickable data-btn" data-id="6" points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" fill="url(#png-6)" />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <h2>
+          <span style="color: mediumturquoise;" id="num_accounts_registered">
+            ...
+          </span>
+          people use the Fire Spelling Bee. Join them and experience how easy it is to teach your kids in a fun way!
+        </h2>
+        <p>v1.0.0-beta-19 | Build 176</p>
+        <script>
+          document.querySelector('.beehive-grid').addEventListener('click', (event) => {
+                const targetButton = event.target.closest('.data-btn');
+                if (!targetButton) return;
+
+                const buttonId = targetButton.getAttribute('data-id');
+                console.log(`Beehive Hexagon #${buttonId} clicked!`);
+                alert(`Triggered action for button ${buttonId}`);
+            });
+        </script>
+        <script>
+          window.addEventListener('scroll', () => {
+                let scrolled = window.pageYOffset;
+                let yPos = Math.floor(-(scrolled * 0.80));
+                document.body.style.backgroundPosition = `0px ${yPos}px`;
+            });
+        </script>
+        <script>
+          // 1. Load the global Supabase bundle (non-module version)
+        // 1. Enter your Supabase credentials exactly as they appear in your dashboard
+        var supabaseUrl = 'https://rgzympbrwrttbrioafjd.supabase.co'; // e.g., 'https://xyzcompany.supabase.co'
+        var supabaseKey = 'sb_publishable_KBQTvKhl5HFq9zwpqbCK5Q_7um8h8t-';
+        var tableName   = 'FireSpellingBeeAccounts';
+
+        // 2. Build the native REST endpoint URL
+        // Supabase exposes all tables under the /rest/v1/ path
+        var apiEndpoint = supabaseUrl + '/rest/v1/' + tableName;
+
+        function loadData() {
+        // 3. Make a standard HTTP request using the native browser Fetch API
+        fetch(apiEndpoint, {
+            method: 'GET',
+            headers: {
+            'apikey': supabaseKey,
+            'Authorization': 'Bearer ' + supabaseKey,
+            'Content-Type': 'application/json'
+            }
+        })
+        .then(function(response) {
+            // Check if the server responded with an error (like 401 or 404)
+            if (!response.ok) {
+            throw new Error('HTTP network error! Status code: ' + response.status);
+            }
+            return response.json(); // Convert the raw response into a JSON object/array
+        })
+        .then(function(data) {
+            // 4. Read the data array length
+            var totalRows = data.length;
+            
+            document.getElementById("num_accounts_registered").innerHTML = totalRows
+            console.log('Fetched all accounts!');
+        })
+        .catch(function(err) {
+            console.error('Fetch operation failed:', err.message);
+        });
+        }
+
+        // Run the function immediately when the script executes
+        loadData();
+        </script>
+        <script>
+          loggedInAccount = localStorage.getItem("loggedInAccount")
+      if (loggedInAccount == null) {
+          document.querySelector(".beehive-grid").innerHTML = `
+          <a href="account/login">
+            <button class="loginsignupbuttons">
+              Log In
+            </button>
+          </a>
+          <br>
+          `
+      }
+        </script>
+      </main>
+      <footer style="text-align: center;" role="contentinfo">
+        <p>
+          &copy; 2026 Fire Spelling Bee. All rights reserved.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

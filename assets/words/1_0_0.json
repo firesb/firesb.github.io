@@ -1,0 +1,96 @@
+{
+  "words": [
+    {
+      "word": "a",
+      "def": "Before the singular of an object that starts with a consonant.",
+      "diff": 1.00,
+      "ex": "He saw a famous person today."
+    },
+    {
+      "word": "I",
+      "def": "To refer to the person who is speaking or writing.",
+      "diff": 1.03,
+      "ex": "I saw her with some books."
+    },
+    {
+      "word": "an",
+      "def": "Before the singular of an object that starts with a vowel.",
+      "diff": 1.00,
+      "ex": "An orange rolled off the hill yesterday."
+    },
+    {
+      "word": "the",
+      "def": "Before any amount of an object that starts with any letter.",
+      "diff": 1.00,
+      "ex": "They ate 4 of the green apples."
+    },
+    {
+      "word": "cat",
+      "def": "A feline animal with four legs and a tail that is fluffy and commonly does an action called purring and makes a \"meow\" sound.",
+      "diff": 1.06,
+      "ex": "Those cats were sitting in a red box."
+    },
+    {
+      "word": "dog",
+      "def": "A canine animal similar to a cat that instead makes a \"bark\" sound that sounds like \"woof\".",
+      "diff": 1.057,
+      "ex": "She saw a dog walking by the playground."
+    },
+    {
+      "word": "fog",
+      "def": "A cloud on the ground, usually at high places",
+      "diff": 1.093,
+      "ex": "He is driving into the fog."
+    },
+    {
+      "word": "herb",
+      "def": "A type of plant that can only be green and produces seeds and dies usally at the end of spring or early summer.",
+      "diff": 2.31,
+      "ex": "They were harvesting the herbs a week ago."
+    },
+    {
+      "word": "foul",
+      "def": "Usually refers to a object or action that is offensive to the speaker.",
+      "diff": 2.59,
+      "ex": "The referee called a foul at the game."
+    },
+    { 
+      "word": "dynasty",
+      "def": "A succession of rulers or leaders who all belong to the same family.",
+      "diff": 3.12,
+      "ex": "They started a dynasty thousands of years ago."
+    },
+    { 
+      "word": "collaboration",
+      "def": "A project that multiple people worked on.",
+      "diff": 3.51,
+      "ex": "The collaboration is due next week."
+    },
+    { 
+      "word": "polynomial",
+      "def": "A math equation that has many numbers and variables.",
+      "diff": 3.83,
+      "ex": "He was solving a hard polynomial today."
+    },
+    { 
+      "word": "calibration",
+      "def": "The process of configuring a device to increase its accuracy.",
+      "diff": 3.72,
+      "ex": "The thermometer needed calibration before use."
+    },
+    { 
+      "word": "exhausted",
+      "def": "Tired in a way",
+      "diff": 3.79,
+      "ex": "He was very exhausted today."
+    },
+    { 
+      "word": "extinguished",
+      "def": "",
+      "diff": 3.68,
+      "ex": ""
+    }
+  ],
+  "dict-version": "1.0.0.037",
+  "last-updated": "2026-07-24 16:55"
+}

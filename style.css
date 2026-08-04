@@ -1,0 +1,16 @@
+body {
+    /* 1. Specify the path to your custom image */
+    background-image: url('/fsb/fsb_background.png'); 
+    
+    /* 2. Prevent the image from repeating like a grid */
+    background-repeat: repeat; 
+    
+    /* 3. Center the image on the screen */
+    background-position: center; 
+            
+    /* 4. Force the image to scale beautifully and cover the screen */
+    background-size: cover;             
+
+    /* 6. Fallback color if the image fails to load */
+    background-color: #eaff00; 
+}
