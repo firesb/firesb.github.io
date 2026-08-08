@@ -1,0 +1,16 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Create Page From Fire Spelling Bee Template",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "$name = Read-Host 'New page filename'; if (-not $name) { exit 1 }; Copy-Item -Force '.template.html' $name; Write-Host 'Created ' $name"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

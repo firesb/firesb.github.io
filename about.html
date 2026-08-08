@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="msvalidate.01" content="F33B01A1CF834E06F749CAFB89E944EE" />
+    <meta name="description" content="Official website for Fire Spelling Bee, a company designed to teach anyone professional English.">
+    <script type="application/ld+json">
+      {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Fire Spelling Bee",
+    "url": "https://firesb.github.io/",
+    "logo": "https://firesb.github.io/logo.png",
+    "sameAs": [
+        "https://firesb.github.io/",
+        "https://github.com/firesb"
+    ]
+    }
+    </script>
+    <title>
+      About - Fire Spelling Bee
+    </title>
+    <link rel="icon" type="image/png" href="/EMOJIS/C_bee.png">
+    <style>
+      body {
+            margin: 0;
+            padding: 20px;
+            font-family: "Brush Script MT", "Brush Script Std", "Comic Sans MS", cursive;
+            background-image: url('/fsb_background.png');
+            background-repeat: repeat; 
+            background-size: auto; 
+            background-position: 0px 0px; 
+            background-color: #eaff00;
+            background-attachment: fixed;
+        }
+
+        .spacer {
+            height: 30000px; 
+        }
+
+        /* 1. FLEX CONTEXT: Main structural column wrapper */
+        .beehive-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        /* 2. FLEX ROW SYSTEM: Safely groups 5 buttons per line */
+        .hive-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            height: 156px; /* Total height of the staggered row height block */
+            margin-bottom: -52px; /* Pulls the NEXT row upward to interlock perfectly */
+        }
+
+        /* 3. INDIVIDUAL CELL: Pulls elements side-by-side with a negative left margin */
+        .hive-item {
+            position: relative;
+            width: 120px;   
+            height: 104px;  
+        }
+
+        /* Pulls buttons together horizontally to link the side teeth */
+        .hive-item + .hive-item {
+            margin-left: -30px; 
+        }
+
+        /* 4. THE ZIG-ZAG MATH: Modulo shifts the 2nd and 4th element down inside EVERY row */
+        .hive-row .hive-item:nth-child(2),
+        .hive-row .hive-item:nth-child(4) {
+            transform: translateY(52px); /* Exactly half the button height */
+        }
+
+        .hex-wrapper {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .hex-clickable {
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+            transform-origin: center;
+        }
+
+        .hex-clickable:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+            position: relative;
+            z-index: 10; /* Ensures the hovered button pops above neighbors cleanly */
+        }
+        button {
+          background-color: #e34424;
+          border-radius: 50000px;
+          font-family: "Brush Script MT", "Brush Script Std", "Comic Sans MS", cursive;
+        }
+        .loginsignupbuttons {
+          font-size: 40px;
+        }
+        h1.at {
+          color: #2387e5;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <header style="text-align: center;" role="banner">
+        <img src="/logo.png" width="20%" alt="Fire Spelling Bee Official Logo">
+      </header>
+      <h1 style="text-align: center;">
+        About Fire Spelling Bee
+      </h1>
+      <main role="main">
+        <h1 id="what-is-fire-spelling-bee" class="at">What is Fire Spelling Bee?</h1>
+        <p>
+          The Fire Spelling Bee is an educational company designed for kids to learn professional English, but anyone can learn!
+        </p>
+        <h1 id="what-are-some-main-features" class="at"></h1>
+      </main>
+      <footer style="text-align: center;" role="contentinfo">
+        <p>
+          &copy; 2026 Fire Spelling Bee. All rights reserved.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
