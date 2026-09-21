@@ -190,8 +190,19 @@
                 if (!targetButton) return;
 
                 const buttonId = targetButton.getAttribute('data-id');
-                console.log(`Beehive Hexagon #${buttonId} clicked!`);
-                alert(`Triggered action for button ${buttonId}`);
+                if (buttonId === '1') {
+                    window.location.href = '/practice';
+                } else if (buttonId === '2') {
+                    window.location.href = '/buy-subscription';
+                } else if (buttonId === '3') {
+                    window.location.href = '/about';
+                } else if (buttonId === '4') {
+                    window.location.href = '/tournaments';
+                } else if (buttonId === '5') {
+                    window.location.href = '/games';
+                } else if (buttonId === '6') {
+                    console.log("Work in progress: This button is reserved for future features.");
+                }
             });
         </script>
         <script>
@@ -204,9 +215,9 @@
         <script>
           // 1. Load the global Supabase bundle (non-module version)
         // 1. Enter your Supabase credentials exactly as they appear in your dashboard
-        var supabaseUrl = 'https://rgzympbrwrttbrioafjd.supabase.co'; // e.g., 'https://xyzcompany.supabase.co'
-        var supabaseKey = 'sb_publishable_KBQTvKhl5HFq9zwpqbCK5Q_7um8h8t-';
-        var tableName   = 'FireSpellingBeeAccounts';
+        var supabaseUrl = 'https://rrxxnrhjdfkkzkggyuby.supabase.co'; // e.g., 'https://xyzcompany.supabase.co'
+        var supabaseKey = 'sb_publishable_8otqa5vZveDxDRaVCV1wOg_i3A5sVPI'; // e.g., 'YOUR_SUPABASE_ANON_KEY'
+        var tableName   = 'firesb_accounts'; // e.g., 'users' or your custom table name
 
         // 2. Build the native REST endpoint URL
         // Supabase exposes all tables under the /rest/v1/ path

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelling Bee Test</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <!-- 1. THESE ELEMENTS WERE MISSING FROM YOUR BODY TAG -->
+    <img src="/logo.png" alt="Logo" style="width: 150px; display: block; margin: 0 auto;">
+    <h2>Practice</h2>
+    
+    <div style="margin-bottom: 15px; font-weight: bold; color: #555;">
+        Progress: <span id="level-display">Level 0/0</span> | 
+        Current Difficulty: <span id="diff-display">0.00</span>
+    </div>
+
+    <div class="practice-card">
+        <button class="primary-btn" id="next-btn">Start Practice</button>
+        <br><br>
+        <button id="repeat-btn" disabled>REPEAT</button>
+        <button id="def-btn" disabled>DEFINITION</button>
+        <button id="ex-btn" disabled>EXAMPLE</button>
+        
+        <br>
+        <input type="text" id="user-input" placeholder="Type your spelling here..." autocomplete="off" disabled>
+        <br>
+        <button id="submit-btn" class="primary-btn" style="background:#007bff;" disabled>Check Answer</button>
+        
+        <div id="feedback"></div>
+    </div>
+
+    <!-- 2. SCRIPT RUNS AFTER THE BODY CONTENT HAS LOADED -->
+    <script>
+        if (!localStorage.getItem('loggedinAccount')) {
+            alert("You must be logged in to practice. Redirecting to login page.");
+            window.location.href = "/account/login.html";
+        }
+
+        if (localStorage.getItem('loggedinAccount')) {
+            const acc = JSON.parse(localStorage.getItem('loggedinAccount'));
+            if (!acc.diffs || !Array.isArray(acc.diffs)) {
+                acc.diffs = [];
+                localStorage.setItem('loggedinAccount', JSON.stringify(acc));
+            }
+        }
+
+        let completedWordsArray = JSON.parse(localStorage.getItem('loggedinAccount'))?.diffs || [];
+        let sortedWords = [];
+        let currentIndex = 0;
+        let currentWordObj = null;
+
+        function speak(text) {
+            if (!text) return;
+            window.speechSynthesis.cancel(); 
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; 
+            window.speechSynthesis.speak(utterance);
+        }
+
+        async function initGame() {
+            try {
+                const response = await fetch("/assets/words/1_0_0.json");
+                const data = await response.json();
+                
+                const allWordsSorted = data.words.sort((a, b) => a.diff - b.diff);
+                sortedWords = allWordsSorted.filter(item => !completedWordsArray.includes(item.word));
+                currentIndex = 0;
+
+                document.getElementById('next-btn').textContent = "Get Next Word";
+                loadWord();
+            } catch (error) {
+                console.error("Error loading word data:", error);
+                document.getElementById('feedback').innerHTML = "<span class='incorrect'>Error loading words.</span>";
+            }
+        }
+
+        function loadWord() {
+            if (sortedWords.length === 0) {
+                document.getElementById('feedback').innerHTML = "<span class='correct'>🎉 You have completed all words!</span>";
+                disableGameUI();
+                return;
+            }
+
+            if (currentIndex >= sortedWords.length) {
+                document.getElementById('feedback').innerHTML = "<span class='correct'>Round complete!</span>";
+                disableGameUI();
+                return;
+            }
+
+            currentWordObj = sortedWords[currentIndex];
+
+            document.getElementById('level-display').textContent = `Word ${currentIndex + 1}/${sortedWords.length}`;
+            document.getElementById('diff-display').textContent = currentWordObj.diff.toFixed(2);
+
+            document.getElementById('feedback').textContent = "";
+            document.getElementById('user-input').value = "";
+            document.getElementById('user-input').disabled = false;
+            document.getElementById('submit-btn').disabled = false;
+            document.getElementById('repeat-btn').disabled = false;
+            
+            document.getElementById('def-btn').disabled = !currentWordObj.def;
+            document.getElementById('ex-btn').disabled = !currentWordObj.ex;
+
+            document.getElementById('user-input').focus();
+            speak(`Spell this word: ${currentWordObj.word}`);
+        }
+
+        function checkAnswer() {
+            if (!currentWordObj) return;
+
+            const userGuess = document.getElementById('user-input').value.trim();
+            const feedbackEl = document.getElementById('feedback');
+
+            if (userGuess.toLowerCase() === currentWordObj.word.toLowerCase()) {
+                feedbackEl.innerHTML = "<span class='correct'>✓ Correct!</span>";
+                speak("Correct!");
+                
+                if (!completedWordsArray.includes(currentWordObj.word)) {
+                    completedWordsArray.push(currentWordObj.word);
+                }
+                
+                updateToDatabase(completedWordsArray); 
+                currentIndex++; 
+                document.getElementById('submit-btn').disabled = true;
+            } else {
+                feedbackEl.innerHTML = `<span class='incorrect'>✗ Incorrect.</span>`;
+                speak(`Incorrect. It is spelled ${currentWordObj.word.split('').join(' ')}`); 
+            }
+        }
+
+        function disableGameUI() {
+            document.getElementById('user-input').disabled = true;
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('repeat-btn').disabled = true;
+            document.getElementById('def-btn').disabled = true;
+            document.getElementById('ex-btn').disabled = true;
+        }
+
+        function updateToDatabase(updatedArray) {
+            const loggedInAccount = JSON.parse(localStorage.getItem('loggedinAccount'));
+            const anonKey = 'sb_publishable_8otqa5vZveDxDRaVCV1wOg_i3A5sVPI';
+            if (!loggedInAccount || !loggedInAccount.username) return;
+
+            loggedInAccount.diffs = updatedArray;
+            localStorage.setItem('loggedinAccount', JSON.stringify(loggedInAccount));
+
+            fetch(`https://rrxxnrhjdfkkzkggyuby.supabase.co/rest/v1/firesb_accounts`, {
+                method: 'PATCH',
+                headers: {
+                    "apikey": anonKey,
+                    "Authorization": `Bearer ${anonKey}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify({ username: loggedInAccount.username, total_difficulty_completed: updatedArray })
+            })
+            .then(response => response.json())
+            .then(data => console.log('Database synced:', data))
+            .catch(error => console.error('Error syncing:', error));
+        }
+
+        // --- Event Listeners Bound Safely ---
+        document.getElementById('next-btn').addEventListener('click', () => {
+            if (sortedWords.length === 0) {
+                initGame();
+            } else {
+                loadWord();
+            }
+        });
+        
+        document.getElementById('repeat-btn').addEventListener('click', () => speak(currentWordObj.word));
+        document.getElementById('def-btn').addEventListener('click', () => speak(`The definition is: ${currentWordObj.def}`));
+        document.getElementById('ex-btn').addEventListener('click', () => speak(`Example usage: ${currentWordObj.ex}`));
+        document.getElementById('submit-btn').addEventListener('click', checkAnswer);
+
+        document.getElementById('user-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !document.getElementById('submit-btn').disabled) {
+                checkAnswer();
+            }
+        });
+    </script>
+
+</body>
+</html>
