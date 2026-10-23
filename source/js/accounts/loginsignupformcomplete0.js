@@ -51,6 +51,7 @@ async function loginWithUsername() {
     localStorage.setItem('username', loggedInUser.username);
     localStorage.setItem('accounttype', loggedInUser.accounttype);
 
+    window.location.href = "/"
     return loggedInUser;
 
   } catch (error) {
