@@ -34,20 +34,20 @@
 
     <!-- 2. SCRIPT RUNS AFTER THE BODY CONTENT HAS LOADED -->
     <script>
-        if (!localStorage.getItem('loggedinAccount')) {
+        if (!localStorage.getItem('loggedInAccount')) {
             alert("You must be logged in to practice. Redirecting to login page.");
             window.location.href = "/account/login.html";
         }
 
-        if (localStorage.getItem('loggedinAccount')) {
-            const acc = JSON.parse(localStorage.getItem('loggedinAccount'));
+        if (localStorage.getItem('loggedInAccount')) {
+            const acc = JSON.parse(localStorage.getItem('loggedInAccount'));
             if (!acc.diffs || !Array.isArray(acc.diffs)) {
                 acc.diffs = [];
-                localStorage.setItem('loggedinAccount', JSON.stringify(acc));
+                localStorage.setItem('loggedInAccount', JSON.stringify(acc));
             }
         }
 
-        let completedWordsArray = JSON.parse(localStorage.getItem('loggedinAccount'))?.diffs || [];
+        let completedWordsArray = JSON.parse(localStorage.getItem('loggedInAccount'))?.diffs || [];
         let sortedWords = [];
         let currentIndex = 0;
         let currentWordObj = null;
@@ -140,12 +140,12 @@
         }
 
         function updateToDatabase(updatedArray) {
-            const loggedInAccount = JSON.parse(localStorage.getItem('loggedinAccount'));
+            const loggedInAccount = JSON.parse(localStorage.getItem('loggedInAccount'));
             const anonKey = 'sb_publishable_8otqa5vZveDxDRaVCV1wOg_i3A5sVPI';
             if (!loggedInAccount || !loggedInAccount.username) return;
 
             loggedInAccount.diffs = updatedArray;
-            localStorage.setItem('loggedinAccount', JSON.stringify(loggedInAccount));
+            localStorage.setItem('loggedInAccount', JSON.stringify(loggedInAccount));
 
             fetch(`https://rrxxnrhjdfkkzkggyuby.supabase.co/rest/v1/firesb_accounts`, {
                 method: 'PATCH',
