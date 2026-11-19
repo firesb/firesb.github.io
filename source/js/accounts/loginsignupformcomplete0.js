@@ -5,6 +5,22 @@ form.addEventListener('submit', async (event) => {
   loginWithUsername();
 });
 
+async function hashSHA256(message) {
+  // 1. Encode the string as a UTF-8 byte array
+  const msgBuffer = new TextEncoder().encode(message);
+
+  // 2. Hash the message (returns an ArrayBuffer)
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+
+  // 3. Convert the ArrayBuffer to a hexadecimal string
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+
+  return hashHex;
+}
+
 async function loginWithUsername() {
   const supabaseUrl = 'https://rrxxnrhjdfkkzkggyuby.supabase.co'; 
   const anonKey = 'sb_publishable_8otqa5vZveDxDRaVCV1wOg_i3A5sVPI'; 
@@ -14,7 +30,7 @@ async function loginWithUsername() {
   const tableName = 'firesb_accounts'; 
   
   const inputUsername = document.getElementById('username').value;
-  const inputPassword = document.getElementById('password').value;
+  const inputPassword = await hashSHA256(document.getElementById('password').value);
 
   // We read the table and filter by matching username and password
   const endpoint = `${supabaseUrl}/rest/v1/${tableName}?username=eq.${encodeURIComponent(inputUsername)}&password=eq.${encodeURIComponent(inputPassword)}&select=*`;
