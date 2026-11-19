@@ -3,6 +3,26 @@ const dropdown = document.getElementById('accounttype');
 const form = document.getElementById('signup-form');
 let classOptionsDiv = document.getElementById('class-options');
 
+async function hashSHA256(message) {
+  // 1. Encode the string as a UTF-8 byte array
+  const msgBuffer = new TextEncoder().encode(message);
+
+  // 2. Hash the message (returns an ArrayBuffer)
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+
+  // 3. Convert the ArrayBuffer to a hexadecimal string
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+
+  return hashHex;
+}
+
+// Usage
+hashSHA256('Hello, World!').then((hash) => {return hash});
+
+
 // 2. Add the change event listener
 dropdown.addEventListener('change', (event) => {
   // 3. Get the newly selected value
@@ -62,7 +82,7 @@ async function insertData() {
 
     let formData = {
         username: document.getElementById('username').value,
-        password: document.getElementById('password').value,
+        password: await hashSHA256(document.getElementById('password').value),
         displayname: document.getElementById('displayname').value,
         accounttype: document.getElementById('accounttype').value,
         class: document.getElementById('class') ? document.getElementById('class').value : null,
