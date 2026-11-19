@@ -43,11 +43,11 @@ async function loginWithUsername() {
         'Authorization': `Bearer ${anonKey}`,
         'Content-Type': 'application/json'
       }
-    });
+  });
     
-    const usersFound = await response.json();
+  const usersFound = await response.json();
 
-    try {
+  try {
     const response = await fetch(`${supabaseUrl}/rest/v1/${tableName}`, {
       method: 'GET', // We are retrieving the matching user row
       headers: {
@@ -55,7 +55,7 @@ async function loginWithUsername() {
         'Authorization': `Bearer ${anonKey}`,
         'Content-Type': 'application/json'
       }
-    });
+  });
 
     const allUsers = await response.json();
 
