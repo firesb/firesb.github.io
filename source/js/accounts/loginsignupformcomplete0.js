@@ -46,6 +46,7 @@ async function loginWithUsername() {
     });
 
     const usersFound = await response.json();
+    console.log(usersFound) // Debugging
 
     if (!response.ok) {
       console.error("Database Error:", usersFound);
