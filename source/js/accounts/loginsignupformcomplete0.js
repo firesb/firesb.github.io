@@ -44,9 +44,22 @@ async function loginWithUsername() {
         'Content-Type': 'application/json'
       }
     });
-
+    
     const usersFound = await response.json();
-    console.log(usersFound) // Debugging
+
+    try {
+    const response = await fetch(`${supabaseUrl}/rest/v1/${tableName}`, {
+      method: 'GET', // We are retrieving the matching user row
+      headers: {
+        'apikey': anonKey,
+        'Authorization': `Bearer ${anonKey}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const allUsers = await response.json();
+
+    console.log(allUsers) // Debugging
 
     if (!response.ok) {
       console.error("Database Error:", usersFound);
