@@ -17,7 +17,11 @@
     if (!hash) {
       return '';
     }
-    return decodeURIComponent(hash);
+    try {
+      return decodeURIComponent(hash);
+    } catch {
+      return hash;
+    }
   }
 
   function setText(id, value, fallback = 'Not available') {
