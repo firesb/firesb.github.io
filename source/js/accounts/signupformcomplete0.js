@@ -89,6 +89,7 @@ async function insertData() {
 
     const data = await response.json();
     console.log('Successfully inserted data:', data);
+    window.location.href = `/profiles/#${encodeURIComponent(data[0].username)}`; // Redirect to the signup complete page
     
   } catch (error) {
     console.error('Failed to insert data:', error);
