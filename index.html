@@ -100,6 +100,10 @@
         .loginsignupbuttons {
           font-size: 40px;
         }
+        #sign-out-button {
+          font-size: 24px;
+          margin-bottom: 16px;
+        }
     </style>
   </head>
   <body>
@@ -112,12 +116,13 @@
       </h1>
       <main role="main">
         <div class="beehive-grid">
+          <button id="sign-out-button" class="loginsignupbuttons" type="button" hidden>Sign Out</button>
           <div class="hive-row">
             <div class="hive-item">
               <svg class="hex-wrapper" viewBox="0 0 100 86.6" xmlns="http://w3.org">
                 <defs>
                   <pattern id="png-1" width="1" height="1" viewBox="0 0 100 86.6" preserveAspectRatio="xMidYMid slice">
-                    <image href="practice-button.png" width="100" height="86.6" />
+                    <image href="/buttons/practice-button.png" width="100" height="86.6" />
                   </pattern>
                 </defs>
                 <polygon class="hex-clickable data-btn" data-id="1" points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" fill="url(#png-1)" />
@@ -127,7 +132,7 @@
               <svg class="hex-wrapper" viewBox="0 0 100 86.6" xmlns="http://w3.org">
                 <defs>
                   <pattern id="png-2" width="1" height="1" viewBox="0 0 100 86.6" preserveAspectRatio="xMidYMid slice">
-                    <image href="buy-subscription-button.png" width="100" height="86.6" />
+                    <image href="/buttons/buy-subscription-button.png" width="100" height="86.6" />
                   </pattern>
                 </defs>
                 <polygon class="hex-clickable data-btn" data-id="2" points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" fill="url(#png-2)" />
@@ -137,7 +142,7 @@
               <svg class="hex-wrapper" viewBox="0 0 100 86.6" xmlns="http://w3.org">
                 <defs>
                   <pattern id="png-3" width="1" height="1" viewBox="0 0 100 86.6" preserveAspectRatio="xMidYMid slice">
-                    <image href="practice-button.png" width="100" height="86.6" />
+                    <image href="/buttons/about-button.png" width="100" height="86.6" />
                   </pattern>
                 </defs>
                 <polygon class="hex-clickable data-btn" data-id="3" points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" fill="url(#png-3)" />
@@ -147,7 +152,7 @@
               <svg class="hex-wrapper" viewBox="0 0 100 86.6" xmlns="http://w3.org">
                 <defs>
                   <pattern id="png-4" width="1" height="1" viewBox="0 0 100 86.6" preserveAspectRatio="xMidYMid slice">
-                    <image href="practice-button.png" width="100" height="86.6" />
+                    <image href="/buttons/profile-button.png" width="100" height="86.6" />
                   </pattern>
                 </defs>
                 <polygon class="hex-clickable data-btn" data-id="4" points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" fill="url(#png-4)" />
@@ -157,7 +162,7 @@
               <svg class="hex-wrapper" viewBox="0 0 100 86.6" xmlns="http://w3.org">
                 <defs>
                   <pattern id="png-5" width="1" height="1" viewBox="0 0 100 86.6" preserveAspectRatio="xMidYMid slice">
-                    <image href="practice-button.png" width="100" height="86.6" />
+                    <image href="/buttons/blank.png" width="100" height="86.6" />
                   </pattern>
                 </defs>
                 <polygon class="hex-clickable data-btn" data-id="5" points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" fill="url(#png-5)" />
@@ -169,7 +174,7 @@
               <svg class="hex-wrapper" viewBox="0 0 100 86.6" xmlns="http://w3.org">
                 <defs>
                   <pattern id="png-6" width="1" height="1" viewBox="0 0 100 86.6" preserveAspectRatio="xMidYMid slice">
-                    <image href="practice-button.png" width="100" height="86.6" />
+                    <image href="/buttons/blank.png" width="100" height="86.6" />
                   </pattern>
                 </defs>
                 <polygon class="hex-clickable data-btn" data-id="6" points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" fill="url(#png-6)" />
@@ -197,11 +202,16 @@
                 } else if (buttonId === '3') {
                     window.location.href = '/about';
                 } else if (buttonId === '4') {
-                    window.location.href = '/tournaments';
+                    const account = JSON.parse(localStorage.getItem('loggedInAccount') || 'null');
+                    if (account && account.id !== undefined && account.id !== null) {
+                        window.location.href = `/profiles/?id=${encodeURIComponent(account.id)}`;
+                    } else {
+                        window.location.href = '/account/login';
+                    }
                 } else if (buttonId === '5') {
                     window.location.href = '/games';
                 } else if (buttonId === '6') {
-                    console.log("Work in progress: This button is reserved for future features.");
+                    window.location.href = '/tournaments';
                 }
             });
         </script>
@@ -256,17 +266,25 @@
         loadData();
         </script>
         <script>
-          loggedInAccount = localStorage.getItem("loggedInAccount")
-      if (loggedInAccount == null) {
-          document.querySelector(".beehive-grid").innerHTML = `
-          <a href="account/login">
-            <button class="loginsignupbuttons">
-              Log In
-            </button>
-          </a>
-          <br>
-          `
-      }
+          const loggedInAccount = localStorage.getItem("loggedInAccount");
+          const signOutButton = document.getElementById("sign-out-button");
+          if (loggedInAccount == null) {
+            document.querySelector(".beehive-grid").innerHTML = `
+              <a href="account/login">
+                <button class="loginsignupbuttons">
+                  Log In
+                </button>
+              </a>
+            `;
+          } else {
+            signOutButton.hidden = false;
+            signOutButton.addEventListener("click", () => {
+              localStorage.removeItem("loggedInAccount");
+              localStorage.removeItem("username");
+              localStorage.removeItem("accounttype");
+              window.location.reload();
+            });
+          }
         </script>
       </main>
       <footer style="text-align: center;" role="contentinfo">

@@ -14,7 +14,7 @@ async function loginWithUsername() {
   const tableName = 'firesb_accounts'; 
   
   const inputUsername = document.getElementById('username').value;
-  const inputPassword = document.getElementById('password').value;
+  const inputPassword = await hashSHA256(document.getElementById('password').value);
 
   // We read the table and filter by matching username and password
   const endpoint = `${supabaseUrl}/rest/v1/${tableName}?username=eq.${encodeURIComponent(inputUsername)}&password=eq.${encodeURIComponent(inputPassword)}&select=*`;

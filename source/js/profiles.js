@@ -1,26 +1,31 @@
 (function () {
   const supabaseUrl = 'https://rrxxnrhjdfkkzkggyuby.supabase.co';
   const anonKey = 'sb_publishable_8otqa5vZveDxDRaVCV1wOg_i3A5sVPI';
-  const columns = 'username,accounttype,created_at,displayname,grade,spoints,ex_level';
+  const columns = 'username,accounttype,created_at,displayname,grade,spoints,ex_level,id';
 
   const title = document.getElementById('profile-title');
   const status = document.getElementById('profile-status');
   const details = document.getElementById('profile-details');
 
-  function getUsername() {
-    const queryUsername = new URLSearchParams(window.location.search).get('username');
+  function getProfileLookup() {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.has('id')) {
+      return { column: 'id', value: searchParams.get('id') || '' };
+    }
+
+    const queryUsername = searchParams.get('username');
     if (queryUsername && queryUsername.trim()) {
-      return queryUsername;
+      return { column: 'username', value: queryUsername };
     }
 
     const hash = window.location.hash.slice(1);
     if (!hash) {
-      return '';
+      return null;
     }
     try {
-      return decodeURIComponent(hash);
+      return { column: 'username', value: decodeURIComponent(hash) };
     } catch {
-      return hash;
+      return { column: 'username', value: hash };
     }
   }
 
@@ -143,34 +148,40 @@
   }
 
   async function loadProfile() {
-    let username;
+    let lookup;
     try {
-      username = getUsername();
+      lookup = getProfileLookup();
     } catch (error) {
-      status.textContent = 'This profile link contains an invalid username.';
+      status.textContent = 'This profile link contains an invalid lookup value.';
       status.setAttribute('role', 'alert');
-      console.error('Could not read profile username:', error);
+      console.error('Could not read profile lookup value:', error);
       return;
     }
 
-    if (!username) {
+    if (!lookup || !lookup.value.trim()) {
       title.textContent = 'Profile not found';
-      status.textContent = 'Open a profile link that includes a username to view this page.';
+      status.textContent = 'Open a profile link that includes a username or ID to view this page.';
       return;
     }
 
+    const encodedValue = encodeURIComponent(lookup.value);
+    const encodedFilterValue = lookup.column === 'username'
+      ? encodedValue.replace(/\./g, '%2E')
+      : encodedValue;
     const params = new URLSearchParams({
-      username: `eq.${username}`,
       select: columns
     }).toString().replace(/\+/g, '%20');
 
     try {
-      const response = await fetch(`${supabaseUrl}/rest/v1/firesb_accounts?${params}`, {
-        headers: {
-          apikey: anonKey,
-          Authorization: `Bearer ${anonKey}`
+      const response = await fetch(
+        `${supabaseUrl}/rest/v1/firesb_accounts?${lookup.column}=eq.${encodedFilterValue}&${params}`,
+        {
+          headers: {
+            apikey: anonKey,
+            Authorization: `Bearer ${anonKey}`
+          }
         }
-      });
+      );
 
       if (!response.ok) {
         throw new Error(`Profile request failed with status ${response.status}.`);
@@ -182,17 +193,19 @@
       }
       if (users.length === 0) {
         title.textContent = 'Profile not found';
-        status.textContent = 'We couldn’t find a profile for that username.';
-        console.warn('Profile lookup returned no matching account.', { username });
-        try {
-          const closestUsername = await findClosestUsername(username);
-          if (closestUsername) {
-            console.info('Closest username match in the database:', closestUsername);
-          } else {
-            console.info('No usernames are available for comparison.');
+        status.textContent = 'We couldn’t find a profile for that username or ID.';
+        console.warn('Profile lookup returned no matching account.', lookup);
+        if (lookup.column === 'username') {
+          try {
+            const closestUsername = await findClosestUsername(lookup.value);
+            if (closestUsername) {
+              console.info('Closest username match in the database:', closestUsername);
+            } else {
+              console.info('No usernames are available for comparison.');
+            }
+          } catch (error) {
+            console.error('Could not search for a similar username:', error);
           }
-        } catch (error) {
-          console.error('Could not search for a similar username:', error);
         }
         return;
       }
